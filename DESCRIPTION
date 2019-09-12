@@ -12,7 +12,6 @@ Description: Homophily refers to the tendency of actors to share positive ties
 License: GPL-3 + file LICENSE
 Depends: R (>= 3.6)
 Imports:
-    data.table,
     igraph
 Suggests:
     covr,
