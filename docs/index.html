@@ -82,6 +82,40 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"knapply/homophily"</span>)</a></code></pre></div>
 </div>
+<div id="usage" class="section level1">
+<h1 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(homophily)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="reference/ei_index.html">ei_index</a></span>(jemmah_islamiyah, <span class="dt">node_attr_name =</span> <span class="st">"role"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co">#&gt; [1] 0.3650794</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/ei_index.html">ei_index</a></span>(jemmah_islamiyah, <span class="dt">node_attr_name =</span> <span class="st">"role"</span>, <span class="dt">scope =</span> <span class="st">"group"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">#&gt;             attribute external_ties internal_ties   ei_index</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; 1          bomb maker             5            10 -0.3333333</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; 2        command team            23             3  0.7692308</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; 3 operation assistant            10             1  0.8181818</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; 4      suicide bomber             5             0  1.0000000</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; 5           Team Lima             0             6 -1.0000000</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="reference/ei_index.html">ei_index</a></span>(jemmah_islamiyah, <span class="dt">node_attr_name =</span> <span class="st">"role"</span>, <span class="dt">scope =</span> <span class="st">"node"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">#&gt;        node           attribute external_ties internal_ties   ei_index</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt; 1    MUKLAS        command team             7             2  0.5555556</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt; 2    AMROZI operation assistant             3             1  0.5000000</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; 3     IMRON operation assistant             9             0  1.0000000</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; 4   SAMUDRA        command team            13             2  0.7333333</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; 5  DULMATIN          bomb maker             5             4  0.1111111</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; 6     IDRIS        command team             8             2  0.6000000</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; 7   MUBAROK operation assistant             2             1  0.3333333</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; 8   AZAHARI          bomb maker             5             4  0.1111111</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; 9     GHONI          bomb maker             5             4  0.1111111</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt; 10  ARNASAN      suicide bomber             5             0  1.0000000</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt; 11     RAUF           Team Lima             2             3 -0.2000000</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt; 12  OCTAVIA           Team Lima             2             3 -0.2000000</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt; 13  HIDAYAT           Team Lima             2             3 -0.2000000</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; 14  JUNAEDI           Team Lima             2             3 -0.2000000</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; 15    PATEK          bomb maker             5             4  0.1111111</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; 16     FERI      suicide bomber             6             0  1.0000000</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; 17   SARIJO          bomb maker             5             4  0.1111111</span></a></code></pre></div>
+</div>
 
   </div>
 

@@ -45,3 +45,14 @@ knitr::opts_chunk$set(
 # install.packages("remotes")
 remotes::install_github("knapply/homophily")
 ```
+
+# Usage
+
+
+```{r}
+library(homophily)
+
+ei_index(jemmah_islamiyah, node_attr_name = "role")
+ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "group")
+ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
+```

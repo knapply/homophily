@@ -1,5 +1,56 @@
-ei_index <- function(g, node_attr_name, 
-                     scope = c("global", "group", "node")) {
+#' Krackhardt's E-I Index
+#' 
+#' Given a categorical vertex attribute describing mutually exclusive groups, the E-I 
+#' index represents a ratio of external to internal ties.
+#' 
+#' @param g 
+#' * `<igraph>`
+#'   + `<network>`, if `{intergraph}` is installed.
+#' @param node_attr_name 
+#' * `<chr>`
+#' * The name of a node/vertex attribute in `g`.
+#' @param scope
+#' * `<chr>`
+#' * The target scope of the resulting EI-Index
+#'   + `"global"`, `"group"`, or `"node"`
+#' 
+#' @details
+#' \deqn{E\mbox{-}I~Index = \frac{EL-IL}{EL+IL}}
+#' 
+#' @references Krackhardt, David, and Robert N. Stern. "Informal Networks and 
+#' Organizational Crises: An Experimental Simulation." Social Psychology Quarterly 51, no.
+#'  2 (1988): 123-40. \url{http://www.jstor.org/stable/2786835}.
+#' 
+#' @template author-bk
+#' 
+#' @examples
+#' ei_index(jemmah_islamiyah, node_attr_name = "role")
+#' 
+#' ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "group")
+#' 
+#' ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
+#' 
+#' @export
+ei_index <- function(g, node_attr_name, scope = c("global", "group", "node")) {
+  UseMethod("ei_index")
+}
+
+#' @rdname ei_index
+#' @export
+ei_index.network <- function(g, node_attr_name, 
+                             scope = c("global", "group", "node")) {
+  if (!requireNamespace("intergraph", quietly = TRUE)) {
+    stop("{intergraph} is required to perform this operation on objects of 
+         class 'network'.", call. = FALSE)
+  }
+  
+  ei_index.igraph(intergraph::asIgraph(g), node_attr_name, scope)
+}
+
+#' @rdname ei_index
+#' @export
+ei_index.igraph <- function(g, node_attr_name, 
+                            scope = c("global", "group", "node")) {
   scope <- match.arg(scope, c("global", "group", "node"))
   
   if (!node_attr_name %in% vertex_attr_names(g)) {
