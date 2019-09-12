@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • homophily</title>
+<title>Construct a graph object's mixing matrix. — as_mixing_matrix • homophily</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,11 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Construct a graph object's mixing matrix. — as_mixing_matrix" />
+
+<meta property="og:description" content="Using a categorical vertex attribute, construct a matrix depicting network mixing
+patterns." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +54,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -98,48 +102,76 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Construct a graph object's mixing matrix.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/knapply/homophily/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>as_mixing_matrix.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Using a categorical vertex attribute, construct a matrix depicting network mixing
+patterns.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>node_attr_name</span>)
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="as_mixing_matrix.html">as_mixing_matrix()</a></code> </p>
-        </td>
-        <td><p>Construct a graph object's mixing matrix.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="ei_index.html">ei_index()</a></code> </p>
-        </td>
-        <td><p>Krackhardt's E-I Index</p></td>
-      </tr>
-    </tbody>
+<span class='co'># S3 method for igraph</span>
+<span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>node_attr_name</span>)
+
+<span class='co'># S3 method for network</span>
+<span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>node_attr_name</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>g</th>
+      <td><ul>
+<li><p><code>&lt;igraph&gt;</code></p><ul>
+<li><p><code>&lt;network&gt;</code>, if <code>{intergraph}</code> is installed.</p></li>
+</ul></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>node_attr_name</th>
+      <td><ul>
+<li><p><code>&lt;chr&gt;</code></p></li>
+<li><p>The name of a node/vertex attribute in <code>g</code>.</p></li>
+</ul></td>
+    </tr>
     </table>
-  </div>
+    
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>jemmah_islamiyah</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"role"</span>)</div><div class='output co'>#&gt;                      
+#&gt;                       bomb maker command team operation assistant
+#&gt;   bomb maker                  10            1                   0
+#&gt;   command team                14            3                   4
+#&gt;   operation assistant          5            4                   1
+#&gt;   suicide bomber               1            0                   0
+#&gt;   Team Lima                    0            0                   0
+#&gt;                      
+#&gt;                       suicide bomber Team Lima
+#&gt;   bomb maker                       4         0
+#&gt;   command team                     1         4
+#&gt;   operation assistant              1         0
+#&gt;   suicide bomber                   0         4
+#&gt;   Team Lima                        0         6</div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
+    <h2>Author</h2>
+    <p>Brendan Knapp <a href='mailto:brendan.g.knapp@gmail.com'>brendan.g.knapp@gmail.com</a></p>
   </div>
 </div>
 
