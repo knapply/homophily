@@ -54,6 +54,14 @@ remotes::install_github("knapply/homophily")
 library(homophily)
 ```
 
+```{r}
+# <igraph>
+data("jemmah_islamiyah", package = "homophily")
+# <network>
+data("sampson", package = "ergm")
+```
+
+
 ## Mixing Matrix
 
 ```{r}
@@ -63,13 +71,10 @@ as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
 ## E-I Index
 
 ```{r}
-class(jemmah_islamiyah)
 ei_index(jemmah_islamiyah, node_attr_name = "role")
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "group")
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
 
-data("sampson", package = "ergm")
-class(samplike)
 ei_index(samplike, node_attr_name = "group")
 ei_index(samplike, node_attr_name = "group", scope = "group")
 ei_index(samplike, node_attr_name = "group", scope = "node")
@@ -79,6 +84,7 @@ ei_index(samplike, node_attr_name = "group", scope = "node")
 
 ```{r}
 assortativity_attr(jemmah_islamiyah, node_attr_name = "role")
+assortativity_attr(samplike, node_attr_name = "group")
 ```
 
 # Cite

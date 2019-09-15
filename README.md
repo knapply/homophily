@@ -39,6 +39,13 @@ remotes::install_github("knapply/homophily")
 library(homophily)
 ```
 
+``` r
+# <igraph>
+data("jemmah_islamiyah", package = "homophily")
+# <network>
+data("sampson", package = "ergm")
+```
+
 ## Mixing Matrix
 
 ``` r
@@ -55,12 +62,6 @@ as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
     #>   Team Lima                      .                   .          .              .        12
 
 ## E-I Index
-
-``` r
-class(jemmah_islamiyah)
-```
-
-    #> [1] "igraph"
 
 ``` r
 ei_index(jemmah_islamiyah, node_attr_name = "role")
@@ -83,13 +84,6 @@ ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
     #>  0.5555556  0.5000000  1.0000000  0.7333333  0.1111111  0.6000000  0.3333333  0.1111111  0.1111111  1.0000000 
     #>       RAUF    OCTAVIA    HIDAYAT    JUNAEDI      PATEK       FERI     SARIJO 
     #> -0.2000000 -0.2000000 -0.2000000 -0.2000000  0.1111111  1.0000000  0.1111111
-
-``` r
-data("sampson", package = "ergm")
-class(samplike)
-```
-
-    #> [1] "network"
 
 ``` r
 ei_index(samplike, node_attr_name = "group")
@@ -120,6 +114,12 @@ assortativity_attr(jemmah_islamiyah, node_attr_name = "role")
 ```
 
     #> [1] 0.09078704
+
+``` r
+assortativity_attr(samplike, node_attr_name = "group")
+```
+
+    #> [1] 0.5445606
 
 # Cite
 
@@ -153,6 +153,6 @@ devtools::check(quiet = TRUE)
     #> Writing NAMESPACE
 
     #> -- R CMD check results ------------------------------------------------------------- homophily 0.0.0.9000 ----
-    #> Duration: 34.7s
+    #> Duration: 34.5s
     #> 
     #> 0 errors v | 0 warnings v | 0 notes v
