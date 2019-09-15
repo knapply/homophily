@@ -5,3 +5,8 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^README.Rmd$
+^README.md$
+^appveyor.yml$
+^data-raw$
+^man-roxygen$

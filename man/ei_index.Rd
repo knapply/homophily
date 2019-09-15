@@ -2,38 +2,21 @@
 % Please edit documentation in R/ei_index.R
 \name{ei_index}
 \alias{ei_index}
-\alias{ei_index.network}
-\alias{ei_index.igraph}
 \title{Krackhardt's E-I Index}
 \usage{
-ei_index(g, node_attr_name, scope = c("global", "group", "node"))
-
-\method{ei_index}{network}(g, node_attr_name, scope = c("global",
-  "group", "node"))
-
-\method{ei_index}{igraph}(g, node_attr_name, scope = c("global", "group",
-  "node"))
+ei_index(g, node_attr_name, scope = c("global", "group", "node"), ...)
 }
 \arguments{
-\item{g}{\itemize{
-\item \code{<igraph>}
-\itemize{
-\item \code{<network>}, if \code{{intergraph}} is installed.
-}
-}}
+\item{g}{\code{<igraph>}, \code{<network>}}
 
-\item{node_attr_name}{\itemize{
-\item \code{<chr>}
-\item The name of a node/vertex attribute in \code{g}.
-}}
+\item{node_attr_name}{\code{<chr>}  The name of a node/vertex attribute in \code{g}.}
 
-\item{scope}{\itemize{
-\item \code{<chr>}
-\item The target scope of the resulting EI-Index
+\item{scope}{\code{<chr>} The target scope of the resulting EI-Index
 \itemize{
 \item \code{"global"}, \code{"group"}, or \code{"node"}
-}
 }}
+
+\item{...}{Arguments passed to or from other methods.}
 }
 \description{
 Given a categorical vertex attribute describing mutually exclusive groups, the E-I
@@ -41,13 +24,22 @@ index represents a ratio of external to internal ties.
 }
 \details{
 \deqn{E\mbox{-}I~Index = \frac{EL-IL}{EL+IL}}
+\itemize{
+\item \eqn{EL}: external ties
+\item \eqn{IL}: internal ties
+}
 }
 \examples{
+# <igraph>
 ei_index(jemmah_islamiyah, node_attr_name = "role")
-
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "group")
-
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
+
+# <network>
+data("sampson", package = "ergm")
+ei_index(samplike, node_attr_name = "group")
+ei_index(samplike, node_attr_name = "group", scope = "group")
+ei_index(samplike, node_attr_name = "group", scope = "node")
 
 }
 \references{

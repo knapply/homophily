@@ -1,0 +1,1 @@
+#' @param g  `<igraph>`, `<network>`

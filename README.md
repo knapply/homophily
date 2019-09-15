@@ -22,6 +22,10 @@ bytes](https://img.shields.io/github/languages/code-size/knapply/homophily.svg)]
 [![HitCount](http://hits.dwyl.io/knapply/homophily.svg)](http://hits.dwyl.io/knapply/homophily)
 <!-- badges: end -->
 
+Homophily refers to the tendency of actors to share positive ties with
+other similar actors. The homphily package provides generic routines to
+measure this phenomenon on objects of class `<igraph>` or `<network>`.
+
 # Installation
 
 ``` r
@@ -33,7 +37,32 @@ remotes::install_github("knapply/homophily")
 
 ``` r
 library(homophily)
+```
 
+## Mixing Matrix
+
+``` r
+as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
+```
+
+    #> 5 x 5 Matrix of class "dtrMatrix"
+    #>                      
+    #>                       command team operation assistant bomb maker suicide bomber Team Lima
+    #>   command team                   6                  16         30              2         8
+    #>   operation assistant            .                   2         10              2         0
+    #>   bomb maker                     .                   .         20             10         0
+    #>   suicide bomber                 .                   .          .              0         8
+    #>   Team Lima                      .                   .          .              .        12
+
+## E-I Index
+
+``` r
+class(jemmah_islamiyah)
+```
+
+    #> [1] "igraph"
+
+``` r
 ei_index(jemmah_islamiyah, node_attr_name = "role")
 ```
 
@@ -43,32 +72,87 @@ ei_index(jemmah_islamiyah, node_attr_name = "role")
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "group")
 ```
 
-    #>             attribute external_ties internal_ties   ei_index
-    #> 1          bomb maker             5            10 -0.3333333
-    #> 2        command team            23             3  0.7692308
-    #> 3 operation assistant            10             1  0.8181818
-    #> 4      suicide bomber             5             0  1.0000000
-    #> 5           Team Lima             0             6 -1.0000000
+    #>        command team operation assistant          bomb maker      suicide bomber           Team Lima 
+    #>           0.8064516           0.7142857          -0.3333333           1.0000000          -1.0000000
 
 ``` r
 ei_index(jemmah_islamiyah, node_attr_name = "role", scope = "node")
 ```
 
-    #>        node           attribute external_ties internal_ties   ei_index
-    #> 1    MUKLAS        command team             7             2  0.5555556
-    #> 2    AMROZI operation assistant             3             1  0.5000000
-    #> 3     IMRON operation assistant             9             0  1.0000000
-    #> 4   SAMUDRA        command team            13             2  0.7333333
-    #> 5  DULMATIN          bomb maker             5             4  0.1111111
-    #> 6     IDRIS        command team             8             2  0.6000000
-    #> 7   MUBAROK operation assistant             2             1  0.3333333
-    #> 8   AZAHARI          bomb maker             5             4  0.1111111
-    #> 9     GHONI          bomb maker             5             4  0.1111111
-    #> 10  ARNASAN      suicide bomber             5             0  1.0000000
-    #> 11     RAUF           Team Lima             2             3 -0.2000000
-    #> 12  OCTAVIA           Team Lima             2             3 -0.2000000
-    #> 13  HIDAYAT           Team Lima             2             3 -0.2000000
-    #> 14  JUNAEDI           Team Lima             2             3 -0.2000000
-    #> 15    PATEK          bomb maker             5             4  0.1111111
-    #> 16     FERI      suicide bomber             6             0  1.0000000
-    #> 17   SARIJO          bomb maker             5             4  0.1111111
+    #>     MUKLAS     AMROZI      IMRON    SAMUDRA   DULMATIN      IDRIS    MUBAROK    AZAHARI      GHONI    ARNASAN 
+    #>  0.5555556  0.5000000  1.0000000  0.7333333  0.1111111  0.6000000  0.3333333  0.1111111  0.1111111  1.0000000 
+    #>       RAUF    OCTAVIA    HIDAYAT    JUNAEDI      PATEK       FERI     SARIJO 
+    #> -0.2000000 -0.2000000 -0.2000000 -0.2000000  0.1111111  1.0000000  0.1111111
+
+``` r
+data("sampson", package = "ergm")
+class(samplike)
+```
+
+    #> [1] "network"
+
+``` r
+ei_index(samplike, node_attr_name = "group")
+```
+
+    #> [1] -0.4318182
+
+``` r
+ei_index(samplike, node_attr_name = "group", scope = "group")
+```
+
+    #>      Turks   Outcasts      Loyal 
+    #> -0.4634146 -0.7391304 -1.0000000
+
+``` r
+ei_index(samplike, node_attr_name = "group", scope = "node")
+```
+
+    #>  John Bosco     Gregory       Basil       Peter Bonaventure    Berthold        Mark      Victor     Ambrose 
+    #> -0.05882353 -0.46666667 -0.25000000 -1.00000000 -0.23076923 -0.66666667 -0.45454545 -0.27272727 -0.50000000 
+    #>     Romauld       Louis     Winfrid       Amand        Hugh    Boniface      Albert       Elias  Simplicius 
+    #> -0.50000000 -0.25000000 -0.81818182  0.00000000 -0.45454545 -0.77777778 -0.50000000 -0.66666667 -0.33333333
+
+## Assortativity
+
+``` r
+assortativity_attr(jemmah_islamiyah, node_attr_name = "role")
+```
+
+    #> [1] 0.09078704
+
+# Cite
+
+``` r
+citation("homophily")
+```
+
+    #> 
+    #> To cite homophily use:
+    #> 
+    #>   Knapp, B. G. (2019). homophily: Measuring Network Homophily Data. R package version 0.0.0.9
+    #>   Retrieved from https://knapply.github.io/homophily
+    #> 
+    #> A BibTeX entry for LaTeX users is
+    #> 
+    #>   @Manual{homophily-package,
+    #>     title = {homophily: Measuring Network Homophily},
+    #>     author = {Brendan Knapp},
+    #>     year = {2019},
+    #>     note = {R package version 0.0.0.9},
+    #>     url = {https://knapply.github.io/homophily},
+    #>   }
+
+# `R CMD Check`
+
+``` r
+devtools::check(quiet = TRUE)
+```
+
+    #> Writing NAMESPACE
+    #> Writing NAMESPACE
+
+    #> -- R CMD check results ------------------------------------------------------------- homophily 0.0.0.9000 ----
+    #> Duration: 34.7s
+    #> 
+    #> 0 errors v | 0 warnings v | 0 notes v

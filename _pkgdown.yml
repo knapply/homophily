@@ -1,1 +1,25 @@
 destination: docs
+
+url: https://knapply.github.io/homophily
+
+template:
+  params:
+    bootswatch: cerulean
+    ganalytics: UA-140885143-3
+
+development:
+  mode: unreleased
+
+reference:
+  - title: Data Structures
+    contents:
+    - as_mixing_matrix
+
+  - title: Metrics
+    contents:
+    - ei_index
+    - assortativity_attr
+
+  - title: Data
+    contents:
+    - jemmah_islamiyah

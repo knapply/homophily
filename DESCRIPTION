@@ -1,4 +1,6 @@
 Package: homophily
+Type: Package
+Date: 2019-09-14
 Title: Measuring Network Homophily
 Version: 0.0.0.9000
 Authors@R: 
@@ -7,19 +9,21 @@ Authors@R:
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3284-4972"))
 Description: Homophily refers to the tendency of actors to share positive ties
-    with other similar actors. The homphily package provides routines to measure
-    this phenomenon.
+    with other similar actors. The homphily package provides generic routines to
+    measure this phenomenon on `<igraph>` and `<network>` objects.
 License: GPL-3 + file LICENSE
 Depends: R (>= 3.6)
 Imports:
-    igraph
+    igraph,
+    Matrix,
+    network
 Suggests:
     covr,
-    intergraph,
+    ergm,
     knitr,
     pkgnet,
     testthat (>= 2.1.0)
-URL: https://github.com/knapply/homophily, https://knapply.github.io/homophily
+URL: https://knapply.github.io/homophily
 BugReports: https://github.com/knapply/homophily/issues
 Encoding: UTF-8
 LazyData: true

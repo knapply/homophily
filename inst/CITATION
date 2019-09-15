@@ -1,0 +1,17 @@
+citHeader("To cite homophily use:")
+
+citEntry(
+  entry        = "Manual",
+  title        = "homophily: Measuring Network Homophily",
+  author       = as.person("Brendan Knapp"),
+  year         = "2019",
+  #    note         = paste("R package version", utils::packageVersion("rtweet")),
+  note         = "R package version 0.0.0.9",
+  url          = "https://knapply.github.io/homophily",
+  key          = "homophily-package",
+  textVersion  = paste(
+    "Knapp, B. G. (2019). homophily: Measuring Network Homophily",
+    "Data. R package version 0.0.0.9",
+    "Retrieved from https://knapply.github.io/homophily"
+  )
+)
