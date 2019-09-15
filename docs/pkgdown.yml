@@ -2,7 +2,4 @@ pandoc: 2.7.2
 pkgdown: 1.4.0
 pkgdown_sha: ~
 articles: []
-urls:
-  reference: https://knapply.github.io/homophily/reference
-  article: https://knapply.github.io/homophily/articles
 
