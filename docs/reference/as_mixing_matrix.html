@@ -134,7 +134,7 @@ patterns.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>row_attr</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='no'>row_attr</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
+    <pre class="usage"><span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>row_attr</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
   <span class='st'>"out"</span>, <span class='st'>"in"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -179,6 +179,71 @@ of the same length as the number of nodes in <code>g</code>.</p></td>
 #&gt;   bomb maker                      10         0
 #&gt;   suicide bomber                   0         8
 #&gt;   Team Lima                        .        12</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"sampson"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ergm"</span>)
+<span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+                 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
+#&gt;              
+#&gt;               Turks Outcasts Loyal
+#&gt;   John Bosco      9        3     5
+#&gt;   Gregory        11        3     1
+#&gt;   Basil           3        5     0
+#&gt;   Peter           0        0     9
+#&gt;   Bonaventure     3        2     8
+#&gt;   Berthold        1        0     5
+#&gt;   Mark            8        2     1
+#&gt;   Victor          4        0     7
+#&gt;   Ambrose         2        0     6
+#&gt;   Romauld         1        1     6
+#&gt;   Louis           3        0     5
+#&gt;   Winfrid        10        0     1
+#&gt;   Amand           1        4     3
+#&gt;   Hugh            8        0     3
+#&gt;   Boniface        8        0     1
+#&gt;   Albert          6        0     2
+#&gt;   Elias           1        5     0
+#&gt;   Simplicius      3        6     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+                 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"out"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
+#&gt;              
+#&gt;               Turks Outcasts Loyal
+#&gt;   John Bosco      3        1     2
+#&gt;   Gregory         5        0     0
+#&gt;   Basil           2        3     0
+#&gt;   Peter           0        0     4
+#&gt;   Bonaventure     1        1     3
+#&gt;   Berthold        1        0     3
+#&gt;   Mark            4        0     1
+#&gt;   Victor          2        0     4
+#&gt;   Ambrose         2        0     2
+#&gt;   Romauld         1        1     4
+#&gt;   Louis           2        0     3
+#&gt;   Winfrid         4        0     0
+#&gt;   Amand           1        1     1
+#&gt;   Hugh            4        0     1
+#&gt;   Boniface        5        0     1
+#&gt;   Albert          5        0     0
+#&gt;   Elias           1        3     0
+#&gt;   Simplicius      3        3     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+                 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"in"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
+#&gt;              
+#&gt;               Turks Outcasts Loyal
+#&gt;   John Bosco      6        2     3
+#&gt;   Gregory         6        3     1
+#&gt;   Basil           1        2     0
+#&gt;   Peter           0        0     5
+#&gt;   Bonaventure     2        1     5
+#&gt;   Berthold        0        0     2
+#&gt;   Mark            4        2     0
+#&gt;   Victor          2        0     3
+#&gt;   Ambrose         0        0     4
+#&gt;   Romauld         0        0     2
+#&gt;   Louis           1        0     2
+#&gt;   Winfrid         6        0     1
+#&gt;   Amand           0        3     2
+#&gt;   Hugh            4        0     2
+#&gt;   Boniface        3        0     0
+#&gt;   Albert          1        0     2
+#&gt;   Elias           0        2     0
+#&gt;   Simplicius      0        3     0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

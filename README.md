@@ -21,6 +21,19 @@ bytes](https://img.shields.io/github/languages/code-size/knapply/homophily.svg)]
 [![HitCount](http://hits.dwyl.io/knapply/homophily.svg)](http://hits.dwyl.io/knapply/homophily)
 <!-- badges: end -->
 
+<center>
+
+<h4>
+
+<i> They say that “birds of a feather flock together”… but let’s not
+take their word for it. </i>
+
+</h4>
+
+</center>
+
+<br><br>
+
 Homophily refers to the tendency of actors to share positive ties with
 other similar actors. The homphily package provides generic routines to
 measure this phenomenon on objects of class `<igraph>` or `<network>`.
@@ -39,13 +52,16 @@ library(homophily)
 ```
 
 ``` r
-# <igraph>
+# undirected <igraph>
 data("jemmah_islamiyah", package = "homophily")
-# <network>
+# directed <network>
 data("sampson", package = "ergm")
 ```
 
 ## Mixing Matrix
+
+We can easily build classical mixing matrices for undirected and
+directed graphs.
 
 ``` r
 as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
@@ -70,6 +86,77 @@ as_mixing_matrix(samplike, row_attr = "group")
     #>   Turks       30        1     5
     #>   Outcasts     7       10     1
     #>   Loyal        9        2    23
+
+We can also build *generalized* mixing matrices to explore homophily
+beyond the topographic level.
+
+For example, if we want to explore ties between each individual node and
+a group attribute, we can provide arguments to both `row_attr=` and
+`col_attr=`.
+
+``` r
+as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group")
+```
+
+    #> 18 x 3 Matrix of class "dgeMatrix"
+    #>              
+    #>               Turks Outcasts Loyal
+    #>   John Bosco      9        3     5
+    #>   Gregory        11        3     1
+    #>   Basil           3        5     0
+    #>   Peter           0        0     9
+    #>   Bonaventure     3        2     8
+    #>   Berthold        1        0     5
+    #>   Mark            8        2     1
+    #>   Victor          4        0     7
+    #>   Ambrose         2        0     6
+    #>   Romauld         1        1     6
+    #>   Louis           3        0     5
+    #>   Winfrid        10        0     1
+    #>   Amand           1        4     3
+    #>   Hugh            8        0     3
+    #>   Boniface        8        0     1
+    #>   Albert          6        0     2
+    #>   Elias           1        5     0
+    #>   Simplicius      3        6     0
+
+We can even explore homophily *across* group attributes.
+
+``` r
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group")
+```
+
+    #> 2 x 3 Matrix of class "dgeMatrix"
+    #>        
+    #>         Turks Outcasts Loyal
+    #>   TRUE     34       15    24
+    #>   FALSE    48       16    39
+
+For directed graphs, the default behavior considers both outgoing and
+inbound ties, but you can provide `"out"` or `"in"` to `direction=` as
+desired.
+
+``` r
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+                 direction = "out")
+```
+
+    #> 2 x 3 Matrix of class "dgeMatrix"
+    #>        
+    #>         Turks Outcasts Loyal
+    #>   TRUE     15        5    10
+    #>   FALSE    31        8    19
+
+``` r
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+                 direction = "in")
+```
+
+    #> 2 x 3 Matrix of class "dgeMatrix"
+    #>        
+    #>         Turks Outcasts Loyal
+    #>   TRUE     19       10    14
+    #>   FALSE    17        8    20
 
 ## E-I Index
 
@@ -113,11 +200,11 @@ ei_index(samplike, node_attr_name = "group", scope = "node")
 ```
 
     #>  John Bosco     Gregory       Basil       Peter Bonaventure    Berthold        Mark      Victor 
-    #>   0.0000000  -1.0000000  -0.2000000  -1.0000000  -0.2000000  -0.5000000  -0.6000000  -0.3333333 
+    #> -0.05882353 -0.46666667 -0.25000000 -1.00000000 -0.23076923 -0.66666667 -0.45454545 -0.27272727 
     #>     Ambrose     Romauld       Louis     Winfrid       Amand        Hugh    Boniface      Albert 
-    #>   0.0000000  -0.3333333  -0.2000000  -1.0000000   0.3333333  -0.6000000  -0.6666667  -1.0000000 
+    #> -0.50000000 -0.50000000 -0.25000000 -0.81818182  0.00000000 -0.45454545 -0.77777778 -0.50000000 
     #>       Elias  Simplicius 
-    #>  -0.5000000   0.0000000
+    #> -0.66666667 -0.33333333
 
 ## Assortativity
 
@@ -165,6 +252,6 @@ devtools::check(quiet = TRUE)
     #> Writing NAMESPACE
 
     #> -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----
-    #> Duration: 33.5s
+    #> Duration: 33.6s
     #> 
     #> 0 errors v | 0 warnings v | 0 notes v

@@ -4,7 +4,7 @@
 \alias{as_mixing_matrix}
 \title{Construct a graph object's mixing matrix.}
 \usage{
-as_mixing_matrix(g, row_attr, col_attr = row_attr, direction = c("all",
+as_mixing_matrix(g, row_attr, col_attr = NULL, direction = c("all",
   "out", "in"))
 }
 \arguments{
@@ -27,6 +27,14 @@ patterns.
 }
 \examples{
 as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
+
+data("sampson", package = "ergm")
+as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group",
+                 direction = "all")
+as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group",
+                 direction = "out")
+as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group", 
+                 direction = "in")
 
 }
 \author{

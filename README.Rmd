@@ -38,6 +38,16 @@ options(width = 100)
 <!-- badges: end -->
 
 
+<center>
+  <h4>
+    <i>
+      They say that "birds of a feather flock together"... but let's not take their word for it.
+    </i>
+  </h4>
+</center>
+
+<br><br>
+
 Homophily refers to the tendency of actors to share positive ties with other similar actors. The homphily package provides generic routines to measure this phenomenon on objects of class `<igraph>` or `<network>`.
     
 
@@ -55,19 +65,44 @@ library(homophily)
 ```
 
 ```{r}
-# <igraph>
+# undirected <igraph>
 data("jemmah_islamiyah", package = "homophily")
-# <network>
+# directed <network>
 data("sampson", package = "ergm")
 ```
 
 
 ## Mixing Matrix
 
+We can easily build classical mixing matrices for undirected and directed graphs.
+
 ```{r}
 as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
 as_mixing_matrix(samplike, row_attr = "group")
+```
 
+We can also build _generalized_ mixing matrices to explore homophily beyond the topographic level.
+
+For example, if we want to explore ties between each individual node and a group attribute, we can provide arguments to both `row_attr=` and `col_attr=`.
+
+```{r}
+as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group")
+```
+
+We can even explore homophily _across_ group attributes.
+
+```{r}
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group")
+```
+
+
+For directed graphs, the default behavior considers both outgoing and inbound ties, but you can provide `"out"` or `"in"` to `direction=` as desired.
+
+```{r}
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+                 direction = "out")
+as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+                 direction = "in")
 ```
 
 ## E-I Index
@@ -88,6 +123,7 @@ ei_index(samplike, node_attr_name = "group", scope = "node")
 assortativity_attr(jemmah_islamiyah, node_attr_name = "role")
 assortativity_attr(samplike, node_attr_name = "group")
 ```
+
 
 # Cite
 
