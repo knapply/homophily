@@ -32,6 +32,8 @@
 
 
 
+  <link href="../extra.css" rel="stylesheet">
+  
 <meta property="og:title" content="Krackhardt's E-I Index — ei_index" />
 
 <meta property="og:description" content="Given a categorical vertex attribute describing mutually exclusive groups, the E-I
@@ -121,7 +123,7 @@ index represents a ratio of external to internal ties." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Krackhardt's E-I Index</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/knapply/homophily/blob/master/R/ei_index.R'><code>R/ei_index.R</code></a></small>
     <div class="hidden name"><code>ei_index.Rd</code></div>
     </div>
 
@@ -186,12 +188,12 @@ Organizational Crises: An Experimental Simulation." Social Psychology Quarterly 
 <span class='co'># &lt;network&gt;</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"sampson"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ergm"</span>)
 <span class='fu'>ei_index</span>(<span class='no'>samplike</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"group"</span>)</div><div class='output co'>#&gt; [1] -0.4318182</div><div class='input'><span class='fu'>ei_index</span>(<span class='no'>samplike</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"group"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"group"</span>)</div><div class='output co'>#&gt;      Turks   Outcasts      Loyal 
-#&gt; -0.4634146 -0.7391304 -1.0000000 </div><div class='input'><span class='fu'>ei_index</span>(<span class='no'>samplike</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"group"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"node"</span>)</div><div class='output co'>#&gt;  John Bosco     Gregory       Basil       Peter Bonaventure    Berthold 
-#&gt; -0.05882353 -0.46666667 -0.25000000 -1.00000000 -0.23076923 -0.66666667 
+#&gt; -0.6666667 -0.8181818 -1.0000000 </div><div class='input'><span class='fu'>ei_index</span>(<span class='no'>samplike</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"group"</span>, <span class='kw'>scope</span> <span class='kw'>=</span> <span class='st'>"node"</span>)</div><div class='output co'>#&gt;  John Bosco     Gregory       Basil       Peter Bonaventure    Berthold 
+#&gt;   0.0000000  -1.0000000  -0.2000000  -1.0000000  -0.2000000  -0.5000000 
 #&gt;        Mark      Victor     Ambrose     Romauld       Louis     Winfrid 
-#&gt; -0.45454545 -0.27272727 -0.50000000 -0.50000000 -0.25000000 -0.81818182 
+#&gt;  -0.6000000  -0.3333333   0.0000000  -0.3333333  -0.2000000  -1.0000000 
 #&gt;       Amand        Hugh    Boniface      Albert       Elias  Simplicius 
-#&gt;  0.00000000 -0.45454545 -0.77777778 -0.50000000 -0.66666667 -0.33333333 </div><div class='input'>
+#&gt;   0.3333333  -0.6000000  -0.6666667  -1.0000000  -0.5000000   0.0000000 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

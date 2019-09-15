@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-options(width = 110)
+options(width = 100)
 ```
 
 
@@ -28,7 +28,7 @@ options(width = 110)
 <!-- badges: start -->
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![GitHub last commit](https://img.shields.io/github/last-commit/knapply/homophily.svg)](https://github.com/knapply/homophily/commits/master)
-[![Codecov test coverage](https://codecov.io/gh/knapply/homophily/branch/master/graph/badge.svg)](https://codecov.io/gh/knapply/homophily?branch=master)
+<!-- [![Codecov test coverage](https://codecov.io/gh/knapply/homophily/branch/master/graph/badge.svg)](https://codecov.io/gh/knapply/homophily?branch=master) -->
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/knapply/homophily?branch=master&svg=true)](https://ci.appveyor.com/project/knapply/homophily)
 [![Travis-CI Build Status](https://travis-ci.org/knapply/homophily.svg?branch=master)](https://travis-ci.org/knapply/homophily)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -66,6 +66,8 @@ data("sampson", package = "ergm")
 
 ```{r}
 as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
+as_mixing_matrix(samplike, row_attr = "group")
+
 ```
 
 ## E-I Index

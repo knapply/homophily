@@ -23,7 +23,7 @@ Suggests:
     knitr,
     pkgnet,
     testthat (>= 2.1.0)
-URL: https://knapply.github.io/homophily
+URL: https://knapply.github.io/homophily https://github.com/knapply/homophily
 BugReports: https://github.com/knapply/homophily/issues
 Encoding: UTF-8
 LazyData: true

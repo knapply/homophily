@@ -1,5 +1,7 @@
 destination: docs
 
+url: https://knapply.github.io/homophily
+
 template:
   params:
     bootswatch: cerulean
