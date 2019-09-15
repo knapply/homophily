@@ -46,9 +46,9 @@ options(width = 100)
   </h4>
 </center>
 
-<br><br>
+<br>
 
-Homophily refers to the tendency of actors to share positive ties with other similar actors. The homphily package provides generic routines to measure this phenomenon on objects of class `<igraph>` or `<network>`.
+Homophily refers to the tendency of actors to share positive ties with other similar actors. The `{homophily}` package provides flexible, generic routines to measure this phenomenon on objects of class `<igraph>` or `<network>`.
     
 
 # Installation

@@ -32,11 +32,12 @@ take their word for it. </i>
 
 </center>
 
-<br><br>
+<br>
 
 Homophily refers to the tendency of actors to share positive ties with
-other similar actors. The homphily package provides generic routines to
-measure this phenomenon on objects of class `<igraph>` or `<network>`.
+other similar actors. The `{homophily}` package provides flexible,
+generic routines to measure this phenomenon on objects of class
+`<igraph>` or `<network>`.
 
 # Installation
 
@@ -252,6 +253,6 @@ devtools::check(quiet = TRUE)
     #> Writing NAMESPACE
 
     #> -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----
-    #> Duration: 33.6s
+    #> Duration: 35.4s
     #> 
     #> 0 errors v | 0 warnings v | 0 notes v
