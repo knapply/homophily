@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Koschade's Jemaah Islamiyah — jemmah_islamiyah • homophily</title>
+<title>Newmans' Assortativity Coefficient — assort_discrete • homophily</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -34,11 +34,11 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Koschade's Jemaah Islamiyah — jemmah_islamiyah" />
+<meta property="og:title" content="Newmans' Assortativity Coefficient — assort_discrete" />
 
-<meta property="og:description" content="jemmah_islamiyah is a reconstruction of the network analyzed
-in Stuart Koschade's A Social Network Analysis of Jemaah Islamiyah, which
-analyzes the network responsible for the 2002 Bali Bombings." />
+<meta property="og:description" content="Given a categorical vertex attribute describing mutually exclusive groups,
+the assortativity coefficient represents the tendency for nodes to form ties
+with similar alters." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -123,48 +123,88 @@ analyzes the network responsible for the 2002 Bali Bombings." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Koschade's Jemaah Islamiyah</h1>
-    <small class="dont-index">Source: <a href='https://github.com/knapply/homophily/blob/master/R/data-jemmah_islamiyah.R'><code>R/data-jemmah_islamiyah.R</code></a></small>
-    <div class="hidden name"><code>jemmah_islamiyah.Rd</code></div>
+    <h1>Newmans' Assortativity Coefficient</h1>
+    <small class="dont-index">Source: <a href='https://github.com/knapply/homophily/blob/master/R/assortativity.R'><code>R/assortativity.R</code></a></small>
+    <div class="hidden name"><code>assort_discrete.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>jemmah_islamiyah</code> is a reconstruction of the network analyzed
-in Stuart Koschade's A Social Network Analysis of Jemaah Islamiyah, which
-analyzes the network responsible for the 2002 Bali Bombings.</p>
+    <p>Given a categorical vertex attribute describing mutually exclusive groups,
+the assortativity coefficient represents the tendency for nodes to form ties
+with similar alters.</p>
     
     </div>
 
-    <pre class="usage"><span class='no'>jemmah_islamiyah</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <pre class="usage"><span class='fu'>assort_discrete</span>(<span class='no'>g</span>, <span class='no'>node_attr_name</span>, <span class='no'>...</span>)
 
-    <p>An object of class <code>igraph</code> of length 10.</p>
+<span class='fu'>assort_scalar</span>(<span class='no'>g</span>, <span class='no'>val1</span>, <span class='kw'>val2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>assort_degree</span>(<span class='no'>g</span>)</pre>
     
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>g</th>
+      <td><p><code>&lt;igraph&gt;</code>, <code>&lt;network&gt;</code></p></td>
+    </tr>
+    <tr>
+      <th>node_attr_name</th>
+      <td><p><code>&lt;chr&gt;</code>  The name of a node/vertex attribute in <code>g</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed to or from other methods.</p></td>
+    </tr>
+    <tr>
+      <th>val1</th>
+      <td><p>Continuous vector.</p></td>
+    </tr>
+    <tr>
+      <th>val2</th>
+      <td><p>Continuous vector.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><a href='https://www.tandfonline.com/doi/abs/10.1080/10576100600798418'>https://www.tandfonline.com/doi/abs/10.1080/10576100600798418</a></p>
+    <p>$$ r = \frac{ \sum_i{e_{ii} - \sum_i{a_ib_i}} } {1 - \sum_i{a_ib_i} } $$</p><ul>
+<li><p>\(e\): mixing matrix</p></li>
+<li><p>\(e_{ii}\): diagonal of mixing matrix</p></li>
+<li><p>\(a_i\): row sums of mixing matrix</p></li>
+<li><p>\(b_i\): column sums of mixing matrix</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Koschade, Stuart (2006) A Social Network Analysis of Jemaah
-Islamiyah: The Applications to Counter-Terrorism and Intelligence. Studies in
-Conflict and Terrorism Vol. 29(6):pp. 559-575</p>
+    <p>M. E. J. Newman, Mixing patterns in networks, Physical Review E,
+67 026126, 2003. <a href='https://arxiv.org/pdf/cond-mat/0209450.pdf'>https://arxiv.org/pdf/cond-mat/0209450.pdf</a>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"faux.desert.high"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ergm"</span>)
+<span class='fu'>assort_discrete</span>(<span class='no'>faux.desert.high</span>, <span class='kw'>node_attr_name</span> <span class='kw'>=</span> <span class='st'>"race"</span>)</div><div class='output co'>#&gt; [1] 0.01577169</div><div class='input'>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"sampson"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ergm"</span>)
+<span class='fu'>assort_discrete</span>(<span class='no'>samplike</span>, <span class='st'>"group"</span>)</div><div class='output co'>#&gt; [1] 0.5445606</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
-      <li><a href="#source">Source</a></li>
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#references">References</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
+    <h2>Author</h2>
+    <p>Brendan Knapp <a href='mailto:brendan.g.knapp@gmail.com'>brendan.g.knapp@gmail.com</a></p>
   </div>
 </div>
 

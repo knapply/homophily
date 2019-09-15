@@ -25,8 +25,8 @@ bytes](https://img.shields.io/github/languages/code-size/knapply/homophily.svg)]
 
 <h4>
 
-<i> They say that “birds of a feather flock together”… but let’s not
-take their word for it. </i>
+<i> They say that “birds of a feather flock together”, but why take
+their word for it? </i>
 
 </h4>
 
@@ -34,10 +34,15 @@ take their word for it. </i>
 
 <br>
 
-Homophily refers to the tendency of actors to share positive ties with
-other similar actors. The `{homophily}` package provides flexible,
-generic routines to measure this phenomenon on objects of class
-`<igraph>` or `<network>`.
+# Introduction
+
+In social networks, actors tend to associate with others who are similar
+in some way, such as race, language, creed, or class. This phenomenon is
+called *homophily*.
+
+The `{homophily}` package provides flexible routines to measure mixing
+patterns using generic methods that are compatible with `<network>` and
+`<igraph>` objects, including `{tidygraph}`’s `<tbl_graph>` objects.
 
 # Installation
 
@@ -53,19 +58,17 @@ library(homophily)
 ```
 
 ``` r
-# undirected <igraph>
-data("jemmah_islamiyah", package = "homophily")
-# directed <network>
-data("sampson", package = "ergm")
+data("jemmah_islamiyah", package = "homophily") # undirected <igraph>
+data("sampson", package = "ergm")               # directed <network>
 ```
 
-## Mixing Matrix
+## Mixing Matrices
 
 We can easily build classical mixing matrices for undirected and
 directed graphs.
 
 ``` r
-as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
+as_mixing_matrix(jemmah_islamiyah, dim1 = "role")
 ```
 
     #> 5 x 5 Matrix of class "dtrMatrix"
@@ -78,7 +81,7 @@ as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
     #>   Team Lima                      .                   .          .              .        12
 
 ``` r
-as_mixing_matrix(samplike, row_attr = "group")
+as_mixing_matrix(samplike, dim1 = "group")
 ```
 
     #> 3 x 3 Matrix of class "dgeMatrix"
@@ -88,15 +91,20 @@ as_mixing_matrix(samplike, row_attr = "group")
     #>   Outcasts     7       10     1
     #>   Loyal        9        2    23
 
-We can also build *generalized* mixing matrices to explore homophily
-beyond the topographic level.
+## Remixing Mixing Matrices
+
+We can also build *generalized* mixing matrices to explore mixing
+patterns across different dimensions.
 
 For example, if we want to explore ties between each individual node and
-a group attribute, we can provide arguments to both `row_attr=` and
-`col_attr=`.
+a group attribute, we can provide arguments to both `dim1=` and `dim2=`.
+
+We’ll use the `{network}` convention of node names being stored in an
+attribute called `"vertex.names"` to see mixing patterns between each
+node and the `"group"` attribute.
 
 ``` r
-as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group")
+as_mixing_matrix(samplike, dim1 = "vertex.names", dim2 = "group")
 ```
 
     #> 18 x 3 Matrix of class "dgeMatrix"
@@ -121,10 +129,12 @@ as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group")
     #>   Elias           1        5     0
     #>   Simplicius      3        6     0
 
-We can even explore homophily *across* group attributes.
+Going further, we can also explore mixing patterns *across* group
+attributes. `samplike`’s `"cloisterville"` attribute notes whether each
+individual attended the Cloisterville monastery.
 
 ``` r
-as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group")
+as_mixing_matrix(samplike, dim1 = "cloisterville", dim2 = "group")
 ```
 
     #> 2 x 3 Matrix of class "dgeMatrix"
@@ -138,7 +148,7 @@ inbound ties, but you can provide `"out"` or `"in"` to `direction=` as
 desired.
 
 ``` r
-as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+as_mixing_matrix(samplike, dim1 = "cloisterville", dim2 = "group",
                  direction = "out")
 ```
 
@@ -149,15 +159,16 @@ as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
     #>   FALSE    31        8    19
 
 ``` r
-as_mixing_matrix(samplike, row_attr = "cloisterville", col_attr = "group",
+as_mixing_matrix(samplike, dim1 = "cloisterville", dim2 = "group",
                  direction = "in")
 ```
 
-    #> 2 x 3 Matrix of class "dgeMatrix"
-    #>        
-    #>         Turks Outcasts Loyal
-    #>   TRUE     19       10    14
-    #>   FALSE    17        8    20
+    #> 3 x 2 Matrix of class "dgeMatrix"
+    #>           
+    #>            TRUE FALSE
+    #>   Turks      19    17
+    #>   Outcasts   10     8
+    #>   Loyal      14    20
 
 ## E-I Index
 
@@ -210,16 +221,78 @@ ei_index(samplike, node_attr_name = "group", scope = "node")
 ## Assortativity
 
 ``` r
-assortativity_attr(jemmah_islamiyah, node_attr_name = "role")
+assort_discrete(jemmah_islamiyah, node_attr_name = "role")
 ```
 
     #> [1] 0.09078704
 
 ``` r
-assortativity_attr(samplike, node_attr_name = "group")
+assort_discrete(samplike, node_attr_name = "group")
 ```
 
     #> [1] 0.5445606
+
+``` r
+assort_degree(samplike) 
+```
+
+    #> [1] 0.05569702
+
+# Benchmarks
+
+``` r
+library(tidyr)
+library(bench)
+library(ggplot2)
+library(igraph)
+
+
+build_it <- function(n_nodes, prob = 0.25, dir = TRUE) {
+  g <- random.graph.game(n_nodes, prob, directed = dir)
+  vertex_attr(g, name = "group") <- sample(letters, n_nodes, replace = TRUE)
+  g
+}
+
+bench_it <- function(bench_foo, seq_nodes = seq(10, 2000, by = 100), ...) {
+  all_res <- lapply(seq_nodes, function(x) {
+    g <- build_it(x)
+    res <- mark(
+      bench_foo(build_it(x), node_attr_name = "group"),
+      iterations = 20
+    )
+    res[["n_nodes"]] <- x
+    res
+  })
+  do.call(rbind, all_res)
+}
+```
+
+``` r
+set.seed(831)
+res <- bench_it(ei_index)
+
+res %>% 
+  unnest() %>% 
+  ggplot(aes(x = n_nodes, y = time)) +
+  ggbeeswarm::geom_quasirandom(aes(color = gc)) +
+  coord_flip()
+```
+
+<img src="man/figures/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+
+# `R CMD Check`
+
+``` r
+devtools::check(quiet = TRUE)
+```
+
+    #> Writing NAMESPACE
+    #> Writing NAMESPACE
+
+    #> -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----
+    #> Duration: 34.9s
+    #> 
+    #> 0 errors v | 0 warnings v | 0 notes v
 
 # Cite
 
@@ -242,17 +315,3 @@ citation("homophily")
     #>     note = {R package version 0.0.0.9},
     #>     url = {https://knapply.github.io/homophily},
     #>   }
-
-# `R CMD Check`
-
-``` r
-devtools::check(quiet = TRUE)
-```
-
-    #> Writing NAMESPACE
-    #> Writing NAMESPACE
-
-    #> -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----
-    #> Duration: 35.4s
-    #> 
-    #> 0 errors v | 0 warnings v | 0 notes v

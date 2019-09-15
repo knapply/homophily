@@ -18,7 +18,7 @@ reference:
   - title: Metrics
     contents:
     - ei_index
-    - assortativity_attr
+    - assort_discrete
 
   - title: Data
     contents:

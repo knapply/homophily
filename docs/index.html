@@ -92,14 +92,19 @@
 
 <h4>
 
-<i> They say that “birds of a feather flock together”… but let’s not
-take their word for it. </i>
+<i> They say that “birds of a feather flock together”, but why take
+their word for it? </i>
 
 </h4>
 
 </center>
 <p><br></p>
-<p>Homophily refers to the tendency of actors to share positive ties with other similar actors. The <code>{homophily}</code> package provides flexible, generic routines to measure this phenomenon on objects of class <code>&lt;igraph&gt;</code> or <code>&lt;network&gt;</code>.</p>
+</div>
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>In social networks, actors tend to associate with others who are similar in some way, such as race, language, creed, or class. This phenomenon is called <em>homophily</em>.</p>
+<p>The <code>{homophily}</code> package provides flexible routines to measure mixing patterns using generic methods that are compatible with <code>&lt;network&gt;</code> and <code>&lt;igraph&gt;</code> objects, including <code>{tidygraph}</code>’s <code>&lt;tbl_graph&gt;</code> objects.</p>
 </div>
 <div id="installation" class="section level1">
 <h1 class="hasAnchor">
@@ -111,15 +116,13 @@ take their word for it. </i>
 <h1 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(homophily)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># undirected &lt;igraph&gt;</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"jemmah_islamiyah"</span>, <span class="dt">package =</span> <span class="st">"homophily"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co"># directed &lt;network&gt;</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"sampson"</span>, <span class="dt">package =</span> <span class="st">"ergm"</span>)</a></code></pre></div>
-<div id="mixing-matrix" class="section level2">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"jemmah_islamiyah"</span>, <span class="dt">package =</span> <span class="st">"homophily"</span>) <span class="co"># undirected &lt;igraph&gt;</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"sampson"</span>, <span class="dt">package =</span> <span class="st">"ergm"</span>)               <span class="co"># directed &lt;network&gt;</span></a></code></pre></div>
+<div id="mixing-matrices" class="section level2">
 <h2 class="hasAnchor">
-<a href="#mixing-matrix" class="anchor"></a>Mixing Matrix</h2>
+<a href="#mixing-matrices" class="anchor"></a>Mixing Matrices</h2>
 <p>We can easily build classical mixing matrices for undirected and directed graphs.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(jemmah_islamiyah, <span class="dt">row_attr =</span> <span class="st">"role"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(jemmah_islamiyah, <span class="dt">dim1 =</span> <span class="st">"role"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co">#&gt; 5 x 5 Matrix of class "dtrMatrix"</span></a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;                      </span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;                       command team operation assistant bomb maker suicide bomber Team Lima</span></a>
@@ -128,16 +131,21 @@ take their word for it. </i>
 <a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt;   bomb maker                     .                   .         20             10         0</span></a>
 <a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;   suicide bomber                 .                   .          .              0         8</span></a>
 <a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;   Team Lima                      .                   .          .              .        12</span></a></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">row_attr =</span> <span class="st">"group"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">dim1 =</span> <span class="st">"group"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">#&gt; 3 x 3 Matrix of class "dgeMatrix"</span></a>
 <a class="sourceLine" id="cb7-2" title="2"><span class="co">#&gt;           </span></a>
 <a class="sourceLine" id="cb7-3" title="3"><span class="co">#&gt;            Turks Outcasts Loyal</span></a>
 <a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt;   Turks       30        1     5</span></a>
 <a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt;   Outcasts     7       10     1</span></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt;   Loyal        9        2    23</span></a></code></pre></div>
-<p>We can also build <em>generalized</em> mixing matrices to explore homophily beyond the topographic level.</p>
-<p>For example, if we want to explore ties between each individual node and a group attribute, we can provide arguments to both <code>row_attr=</code> and <code>col_attr=</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">row_attr =</span> <span class="st">"vertex.names"</span>, <span class="dt">col_attr =</span> <span class="st">"group"</span>)</a></code></pre></div>
+</div>
+<div id="remixing-mixing-matrices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#remixing-mixing-matrices" class="anchor"></a>Remixing Mixing Matrices</h2>
+<p>We can also build <em>generalized</em> mixing matrices to explore mixing patterns across different dimensions.</p>
+<p>For example, if we want to explore ties between each individual node and a group attribute, we can provide arguments to both <code>dim1=</code> and <code>dim2=</code>.</p>
+<p>We’ll use the <code>{network}</code> convention of node names being stored in an attribute called <code>"vertex.names"</code> to see mixing patterns between each node and the <code>"group"</code> attribute.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">dim1 =</span> <span class="st">"vertex.names"</span>, <span class="dt">dim2 =</span> <span class="st">"group"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co">#&gt; 18 x 3 Matrix of class "dgeMatrix"</span></a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt;              </span></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;               Turks Outcasts Loyal</span></a>
@@ -159,28 +167,29 @@ take their word for it. </i>
 <a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt;   Albert          6        0     2</span></a>
 <a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt;   Elias           1        5     0</span></a>
 <a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt;   Simplicius      3        6     0</span></a></code></pre></div>
-<p>We can even explore homophily <em>across</em> group attributes.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">row_attr =</span> <span class="st">"cloisterville"</span>, <span class="dt">col_attr =</span> <span class="st">"group"</span>)</a></code></pre></div>
+<p>Going further, we can also explore mixing patterns <em>across</em> group attributes. <code>samplike</code>’s <code>"cloisterville"</code> attribute notes whether each individual attended the Cloisterville monastery.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">dim1 =</span> <span class="st">"cloisterville"</span>, <span class="dt">dim2 =</span> <span class="st">"group"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co">#&gt; 2 x 3 Matrix of class "dgeMatrix"</span></a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="co">#&gt;        </span></a>
 <a class="sourceLine" id="cb11-3" title="3"><span class="co">#&gt;         Turks Outcasts Loyal</span></a>
 <a class="sourceLine" id="cb11-4" title="4"><span class="co">#&gt;   TRUE     34       15    24</span></a>
 <a class="sourceLine" id="cb11-5" title="5"><span class="co">#&gt;   FALSE    48       16    39</span></a></code></pre></div>
 <p>For directed graphs, the default behavior considers both outgoing and inbound ties, but you can provide <code>"out"</code> or <code>"in"</code> to <code>direction=</code> as desired.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">row_attr =</span> <span class="st">"cloisterville"</span>, <span class="dt">col_attr =</span> <span class="st">"group"</span>,</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">dim1 =</span> <span class="st">"cloisterville"</span>, <span class="dt">dim2 =</span> <span class="st">"group"</span>,</a>
 <a class="sourceLine" id="cb12-2" title="2">                 <span class="dt">direction =</span> <span class="st">"out"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">#&gt; 2 x 3 Matrix of class "dgeMatrix"</span></a>
 <a class="sourceLine" id="cb13-2" title="2"><span class="co">#&gt;        </span></a>
 <a class="sourceLine" id="cb13-3" title="3"><span class="co">#&gt;         Turks Outcasts Loyal</span></a>
 <a class="sourceLine" id="cb13-4" title="4"><span class="co">#&gt;   TRUE     15        5    10</span></a>
 <a class="sourceLine" id="cb13-5" title="5"><span class="co">#&gt;   FALSE    31        8    19</span></a></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">row_attr =</span> <span class="st">"cloisterville"</span>, <span class="dt">col_attr =</span> <span class="st">"group"</span>,</a>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw"><a href="reference/as_mixing_matrix.html">as_mixing_matrix</a></span>(samplike, <span class="dt">dim1 =</span> <span class="st">"cloisterville"</span>, <span class="dt">dim2 =</span> <span class="st">"group"</span>,</a>
 <a class="sourceLine" id="cb14-2" title="2">                 <span class="dt">direction =</span> <span class="st">"in"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co">#&gt; 2 x 3 Matrix of class "dgeMatrix"</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="co">#&gt;        </span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="co">#&gt;         Turks Outcasts Loyal</span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="co">#&gt;   TRUE     19       10    14</span></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="co">#&gt;   FALSE    17        8    20</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co">#&gt; 3 x 2 Matrix of class "dgeMatrix"</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="co">#&gt;           </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="co">#&gt;            TRUE FALSE</span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co">#&gt;   Turks      19    17</span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="co">#&gt;   Outcasts   10     8</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co">#&gt;   Loyal      14    20</span></a></code></pre></div>
 </div>
 <div id="e-i-index" class="section level2">
 <h2 class="hasAnchor">
@@ -211,44 +220,83 @@ take their word for it. </i>
 <div id="assortativity" class="section level2">
 <h2 class="hasAnchor">
 <a href="#assortativity" class="anchor"></a>Assortativity</h2>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="reference/assortativity_attr.html">assortativity_attr</a></span>(jemmah_islamiyah, <span class="dt">node_attr_name =</span> <span class="st">"role"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="kw"><a href="reference/assort_discrete.html">assort_discrete</a></span>(jemmah_islamiyah, <span class="dt">node_attr_name =</span> <span class="st">"role"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="co">#&gt; [1] 0.09078704</span></a></code></pre></div>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="reference/assortativity_attr.html">assortativity_attr</a></span>(samplike, <span class="dt">node_attr_name =</span> <span class="st">"group"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw"><a href="reference/assort_discrete.html">assort_discrete</a></span>(samplike, <span class="dt">node_attr_name =</span> <span class="st">"group"</span>)</a></code></pre></div>
 <div class="sourceCode" id="cb31"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co">#&gt; [1] 0.5445606</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="reference/assort_discrete.html">assort_degree</a></span>(samplike) </a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">#&gt; [1] 0.05569702</span></a></code></pre></div>
 </div>
 </div>
-<div id="cite" class="section level1">
+<div id="benchmarks" class="section level1">
 <h1 class="hasAnchor">
-<a href="#cite" class="anchor"></a>Cite</h1>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"homophily"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb33-2" title="2"><span class="co">#&gt; To cite homophily use:</span></a>
-<a class="sourceLine" id="cb33-3" title="3"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb33-4" title="4"><span class="co">#&gt;   Knapp, B. G. (2019). homophily: Measuring Network Homophily Data. R package version</span></a>
-<a class="sourceLine" id="cb33-5" title="5"><span class="co">#&gt;   0.0.0.9 Retrieved from https://knapply.github.io/homophily</span></a>
-<a class="sourceLine" id="cb33-6" title="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb33-7" title="7"><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></a>
-<a class="sourceLine" id="cb33-8" title="8"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb33-9" title="9"><span class="co">#&gt;   @Manual{homophily-package,</span></a>
-<a class="sourceLine" id="cb33-10" title="10"><span class="co">#&gt;     title = {homophily: Measuring Network Homophily},</span></a>
-<a class="sourceLine" id="cb33-11" title="11"><span class="co">#&gt;     author = {Brendan Knapp},</span></a>
-<a class="sourceLine" id="cb33-12" title="12"><span class="co">#&gt;     year = {2019},</span></a>
-<a class="sourceLine" id="cb33-13" title="13"><span class="co">#&gt;     note = {R package version 0.0.0.9},</span></a>
-<a class="sourceLine" id="cb33-14" title="14"><span class="co">#&gt;     url = {https://knapply.github.io/homophily},</span></a>
-<a class="sourceLine" id="cb33-15" title="15"><span class="co">#&gt;   }</span></a></code></pre></div>
+<a href="#benchmarks" class="anchor"></a>Benchmarks</h1>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bench)</a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(igraph)</a>
+<a class="sourceLine" id="cb34-5" title="5"></a>
+<a class="sourceLine" id="cb34-6" title="6"></a>
+<a class="sourceLine" id="cb34-7" title="7">build_it &lt;-<span class="st"> </span><span class="cf">function</span>(n_nodes, <span class="dt">prob =</span> <span class="fl">0.25</span>, <span class="dt">dir =</span> <span class="ot">TRUE</span>) {</a>
+<a class="sourceLine" id="cb34-8" title="8">  g &lt;-<span class="st"> </span><span class="kw">random.graph.game</span>(n_nodes, prob, <span class="dt">directed =</span> dir)</a>
+<a class="sourceLine" id="cb34-9" title="9">  <span class="kw">vertex_attr</span>(g, <span class="dt">name =</span> <span class="st">"group"</span>) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sample.html">sample</a></span>(letters, n_nodes, <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb34-10" title="10">  g</a>
+<a class="sourceLine" id="cb34-11" title="11">}</a>
+<a class="sourceLine" id="cb34-12" title="12"></a>
+<a class="sourceLine" id="cb34-13" title="13">bench_it &lt;-<span class="st"> </span><span class="cf">function</span>(bench_foo, <span class="dt">seq_nodes =</span> <span class="kw"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="dv">10</span>, <span class="dv">2000</span>, <span class="dt">by =</span> <span class="dv">100</span>), ...) {</a>
+<a class="sourceLine" id="cb34-14" title="14">  all_res &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(seq_nodes, <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb34-15" title="15">    g &lt;-<span class="st"> </span><span class="kw">build_it</span>(x)</a>
+<a class="sourceLine" id="cb34-16" title="16">    res &lt;-<span class="st"> </span><span class="kw">mark</span>(</a>
+<a class="sourceLine" id="cb34-17" title="17">      <span class="kw">bench_foo</span>(<span class="kw">build_it</span>(x), <span class="dt">node_attr_name =</span> <span class="st">"group"</span>),</a>
+<a class="sourceLine" id="cb34-18" title="18">      <span class="dt">iterations =</span> <span class="dv">20</span></a>
+<a class="sourceLine" id="cb34-19" title="19">    )</a>
+<a class="sourceLine" id="cb34-20" title="20">    res[[<span class="st">"n_nodes"</span>]] &lt;-<span class="st"> </span>x</a>
+<a class="sourceLine" id="cb34-21" title="21">    res</a>
+<a class="sourceLine" id="cb34-22" title="22">  })</a>
+<a class="sourceLine" id="cb34-23" title="23">  <span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(rbind, all_res)</a>
+<a class="sourceLine" id="cb34-24" title="24">}</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">831</span>)</a>
+<a class="sourceLine" id="cb35-2" title="2">res &lt;-<span class="st"> </span><span class="kw">bench_it</span>(ei_index)</a>
+<a class="sourceLine" id="cb35-3" title="3"></a>
+<a class="sourceLine" id="cb35-4" title="4">res <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="st">  </span><span class="kw">unnest</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> n_nodes, <span class="dt">y =</span> time)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="st">  </span>ggbeeswarm<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_quasirandom.html">geom_quasirandom</a></span>(<span class="kw">aes</span>(<span class="dt">color =</span> gc)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-8" title="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<p><img src="reference/figures/unnamed-chunk-13-1.png" style="display: block; margin: auto;"></p>
 </div>
 <div id="r-cmd-check" class="section level1">
 <h1 class="hasAnchor">
 <a href="#r-cmd-check" class="anchor"></a><code>R CMD Check</code>
 </h1>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/check.html">check</a></span>(<span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="co">#&gt; Writing NAMESPACE</span></a>
-<a class="sourceLine" id="cb35-2" title="2"><span class="co">#&gt; Writing NAMESPACE</span></a>
-<a class="sourceLine" id="cb35-3" title="3"></a>
-<a class="sourceLine" id="cb35-4" title="4"><span class="co">#&gt; -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----</span></a>
-<a class="sourceLine" id="cb35-5" title="5"><span class="co">#&gt; Duration: 35.4s</span></a>
-<a class="sourceLine" id="cb35-6" title="6"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb35-7" title="7"><span class="co">#&gt; 0 errors v | 0 warnings v | 0 notes v</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/check.html">check</a></span>(<span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="co">#&gt; Writing NAMESPACE</span></a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="co">#&gt; Writing NAMESPACE</span></a>
+<a class="sourceLine" id="cb37-3" title="3"></a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="co">#&gt; -- R CMD check results --------------------------------------------------- homophily 0.0.0.9000 ----</span></a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="co">#&gt; Duration: 34.9s</span></a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb37-7" title="7"><span class="co">#&gt; 0 errors v | 0 warnings v | 0 notes v</span></a></code></pre></div>
+</div>
+<div id="cite" class="section level1">
+<h1 class="hasAnchor">
+<a href="#cite" class="anchor"></a>Cite</h1>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span>(<span class="st">"homophily"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb39-2" title="2"><span class="co">#&gt; To cite homophily use:</span></a>
+<a class="sourceLine" id="cb39-3" title="3"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb39-4" title="4"><span class="co">#&gt;   Knapp, B. G. (2019). homophily: Measuring Network Homophily Data. R package version</span></a>
+<a class="sourceLine" id="cb39-5" title="5"><span class="co">#&gt;   0.0.0.9 Retrieved from https://knapply.github.io/homophily</span></a>
+<a class="sourceLine" id="cb39-6" title="6"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></a>
+<a class="sourceLine" id="cb39-8" title="8"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb39-9" title="9"><span class="co">#&gt;   @Manual{homophily-package,</span></a>
+<a class="sourceLine" id="cb39-10" title="10"><span class="co">#&gt;     title = {homophily: Measuring Network Homophily},</span></a>
+<a class="sourceLine" id="cb39-11" title="11"><span class="co">#&gt;     author = {Brendan Knapp},</span></a>
+<a class="sourceLine" id="cb39-12" title="12"><span class="co">#&gt;     year = {2019},</span></a>
+<a class="sourceLine" id="cb39-13" title="13"><span class="co">#&gt;     note = {R package version 0.0.0.9},</span></a>
+<a class="sourceLine" id="cb39-14" title="14"><span class="co">#&gt;     url = {https://knapply.github.io/homophily},</span></a>
+<a class="sourceLine" id="cb39-15" title="15"><span class="co">#&gt;   }</span></a></code></pre></div>
 </div>
 
   </div>

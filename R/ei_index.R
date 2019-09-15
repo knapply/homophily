@@ -53,7 +53,7 @@ ei_index <- function(g, node_attr_name, scope = c("global", "group", "node"),
 }
 #' @importFrom Matrix diag
 .ei_global <- function(g, node_attr_name, ...) {
-  mix_mat <- as_mixing_matrix(g, row_attr = node_attr_name, ...)
+  mix_mat <- as_mixing_matrix(g, dim1 = node_attr_name, ...)
   
   I <- sum(diag(mix_mat))
   diag(mix_mat) <- 0
@@ -82,7 +82,7 @@ ei_index <- function(g, node_attr_name, scope = c("global", "group", "node"),
     factor(node_attrs, levels = unique(node_attrs))
   )
   
-  mix_mat <- as_mixing_matrix(g, row_attr = node_names, col_attr = node_attrs,
+  mix_mat <- as_mixing_matrix(g, dim1 = node_names, dim2 = node_attrs,
                               ...)
   
   I <- rowSums(mix_mat * attr_mat)

@@ -4,16 +4,16 @@
 \alias{as_mixing_matrix}
 \title{Construct a graph object's mixing matrix.}
 \usage{
-as_mixing_matrix(g, row_attr, col_attr = NULL, direction = c("all",
-  "out", "in"))
+as_mixing_matrix(g, dim1, dim2 = NULL, direction = c("all", "out",
+  "in"))
 }
 \arguments{
 \item{g}{\code{<igraph>}, \code{<network>}}
 
-\item{row_attr}{Either the name of a node/vertex attribute or vector of same
+\item{dim1}{Either the name of a node/vertex attribute or vector of same
 length as the number of nodes in \code{g}.}
 
-\item{col_attr}{If not provided, the same as \code{row_attr}. Otherwise, a vector
+\item{dim2}{If not provided, the same as \code{dim1}. Otherwise, a vector
 of the same length as the number of nodes in \code{g}.}
 
 \item{direction}{\code{<chr>}  The direction of ties to take into a account.
@@ -21,19 +21,48 @@ of the same length as the number of nodes in \code{g}.}
 \item \code{"all"}, \code{"out"}, or \code{"in"}
 }}
 }
+\value{
+\itemize{
+\item \code{<dtrMatrix>}
+\itemize{
+\item \code{g} is undirected and \code{dim1} and \code{dim2} refer to same dimension.
+}
+\item \code{<dgeMatrix>}
+\itemize{
+\item \code{g} is directed or \code{dim1} and \code{dim2} refer to different dimensions.
+}
+\item \code{<ddiMatrix>}
+\itemize{
+\item \code{g} exhibits 100% homophily.
+}
+}
+}
 \description{
 Using a categorical vertex attribute, construct a matrix depicting network mixing
 patterns.
 }
+\details{
+\itemize{
+\item If \code{g} is undirected, \code{dim1} corresponds to the rows of the returned
+mixing matrix and \code{dim2} corresponds to the columns.
+\itemize{
+\item If \code{dim1} and \code{dim2} refer to the same dimension/attribute, only the
+upper triangle of the returned mixing matrix is used.
+}
+\item If \code{g} is directed, the rows of the returned mixing matrix correspond
+to the source of ties while the columns correspond to the target of ties.
+}
+}
 \examples{
-as_mixing_matrix(jemmah_islamiyah, row_attr = "role")
+as_mixing_matrix(jemmah_islamiyah, dim1 = "role")
+as_mixing_matrix(jemmah_islamiyah, dim1 = "name", dim2 = "role")
 
 data("sampson", package = "ergm")
-as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group",
+as_mixing_matrix(samplike, dim1 = "vertex.names", dim2 = "group",
                  direction = "all")
-as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group",
+as_mixing_matrix(samplike, dim1 = "vertex.names", dim2 = "group",
                  direction = "out")
-as_mixing_matrix(samplike, row_attr = "vertex.names", col_attr = "group", 
+as_mixing_matrix(samplike, dim1 = "vertex.names", dim2 = "group", 
                  direction = "in")
 
 }

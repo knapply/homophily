@@ -134,8 +134,8 @@ patterns.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>row_attr</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>,
-  <span class='st'>"out"</span>, <span class='st'>"in"</span>))</pre>
+    <pre class="usage"><span class='fu'>as_mixing_matrix</span>(<span class='no'>g</span>, <span class='no'>dim1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"out"</span>,
+  <span class='st'>"in"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,13 +145,13 @@ patterns.</p>
       <td><p><code>&lt;igraph&gt;</code>, <code>&lt;network&gt;</code></p></td>
     </tr>
     <tr>
-      <th>row_attr</th>
+      <th>dim1</th>
       <td><p>Either the name of a node/vertex attribute or vector of same
 length as the number of nodes in <code>g</code>.</p></td>
     </tr>
     <tr>
-      <th>col_attr</th>
-      <td><p>If not provided, the same as <code>row_attr</code>. Otherwise, a vector
+      <th>dim2</th>
+      <td><p>If not provided, the same as <code>dim1</code>. Otherwise, a vector
 of the same length as the number of nodes in <code>g</code>.</p></td>
     </tr>
     <tr>
@@ -162,9 +162,39 @@ of the same length as the number of nodes in <code>g</code>.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    
+<ul>
+<li><p><code>&lt;dtrMatrix&gt;</code></p><ul>
+<li><p><code>g</code> is undirected and <code>dim1</code> and <code>dim2</code> refer to same dimension.</p></li>
+</ul></li>
+<li><p><code>&lt;dgeMatrix&gt;</code></p><ul>
+<li><p><code>g</code> is directed or <code>dim1</code> and <code>dim2</code> refer to different dimensions.</p></li>
+</ul></li>
+<li><p><code>&lt;ddiMatrix&gt;</code></p><ul>
+<li><p><code>g</code> exhibits 100<!-- % homophily. --></p></li>
+</ul></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    
+<ul>
+<li><p>If <code>g</code> is undirected, <code>dim1</code> corresponds to the rows of the returned
+mixing matrix and <code>dim2</code> corresponds to the columns.</p><ul>
+<li><p>If <code>dim1</code> and <code>dim2</code> refer to the same dimension/attribute, only the
+upper triangle of the returned mixing matrix is used.</p></li>
+</ul></li>
+<li><p>If <code>g</code> is directed, the rows of the returned mixing matrix correspond
+to the source of ties while the columns correspond to the target of ties.</p></li>
+</ul>
+
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>jemmah_islamiyah</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"role"</span>)</div><div class='output co'>#&gt; 5 x 5 Matrix of class "dtrMatrix"
+    <pre class="examples"><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>jemmah_islamiyah</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='st'>"role"</span>)</div><div class='output co'>#&gt; 5 x 5 Matrix of class "dtrMatrix"
 #&gt;                      
 #&gt;                       command team operation assistant bomb maker
 #&gt;   command team                   6                  16         30
@@ -178,9 +208,28 @@ of the same length as the number of nodes in <code>g</code>.</p></td>
 #&gt;   operation assistant              2         0
 #&gt;   bomb maker                      10         0
 #&gt;   suicide bomber                   0         8
-#&gt;   Team Lima                        .        12</div><div class='input'>
+#&gt;   Team Lima                        .        12</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>jemmah_islamiyah</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='st'>"name"</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='st'>"role"</span>)</div><div class='output co'>#&gt; 17 x 5 Matrix of class "dgeMatrix"
+#&gt;           
+#&gt;            command team operation assistant bomb maker suicide bomber Team Lima
+#&gt;   MUKLAS              2                   2          5              0         0
+#&gt;   AMROZI              3                   1          0              0         0
+#&gt;   IMRON               3                   0          5              1         0
+#&gt;   SAMUDRA             2                   3          5              1         4
+#&gt;   DULMATIN            3                   1          4              1         0
+#&gt;   IDRIS               2                   3          5              0         0
+#&gt;   MUBAROK             2                   1          0              0         0
+#&gt;   AZAHARI             3                   1          4              1         0
+#&gt;   GHONI               3                   1          4              1         0
+#&gt;   ARNASAN             1                   0          0              0         4
+#&gt;   RAUF                1                   0          0              1         3
+#&gt;   OCTAVIA             1                   0          0              1         3
+#&gt;   HIDAYAT             1                   0          0              1         3
+#&gt;   JUNAEDI             1                   0          0              1         3
+#&gt;   PATEK               3                   1          4              1         0
+#&gt;   FERI                0                   1          5              0         0
+#&gt;   SARIJO              3                   1          4              1         0</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"sampson"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"ergm"</span>)
-<span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+<span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
                  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
 #&gt;              
 #&gt;               Turks Outcasts Loyal
@@ -201,7 +250,7 @@ of the same length as the number of nodes in <code>g</code>.</p></td>
 #&gt;   Boniface        8        0     1
 #&gt;   Albert          6        0     2
 #&gt;   Elias           1        5     0
-#&gt;   Simplicius      3        6     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+#&gt;   Simplicius      3        6     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
                  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"out"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
 #&gt;              
 #&gt;               Turks Outcasts Loyal
@@ -222,35 +271,34 @@ of the same length as the number of nodes in <code>g</code>.</p></td>
 #&gt;   Boniface        5        0     1
 #&gt;   Albert          5        0     0
 #&gt;   Elias           1        3     0
-#&gt;   Simplicius      3        3     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>row_attr</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>col_attr</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
-                 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"in"</span>)</div><div class='output co'>#&gt; 18 x 3 Matrix of class "dgeMatrix"
-#&gt;              
-#&gt;               Turks Outcasts Loyal
-#&gt;   John Bosco      6        2     3
-#&gt;   Gregory         6        3     1
-#&gt;   Basil           1        2     0
-#&gt;   Peter           0        0     5
-#&gt;   Bonaventure     2        1     5
-#&gt;   Berthold        0        0     2
-#&gt;   Mark            4        2     0
-#&gt;   Victor          2        0     3
-#&gt;   Ambrose         0        0     4
-#&gt;   Romauld         0        0     2
-#&gt;   Louis           1        0     2
-#&gt;   Winfrid         6        0     1
-#&gt;   Amand           0        3     2
-#&gt;   Hugh            4        0     2
-#&gt;   Boniface        3        0     0
-#&gt;   Albert          1        0     2
-#&gt;   Elias           0        2     0
-#&gt;   Simplicius      0        3     0</div><div class='input'>
+#&gt;   Simplicius      3        3     0</div><div class='input'><span class='fu'>as_mixing_matrix</span>(<span class='no'>samplike</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='st'>"vertex.names"</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+                 <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"in"</span>)</div><div class='output co'>#&gt; 3 x 18 Matrix of class "dgeMatrix"
+#&gt;           
+#&gt;            John Bosco Gregory Basil Peter Bonaventure Berthold Mark Victor
+#&gt;   Turks             6       6     1     0           2        0    4      2
+#&gt;   Outcasts          2       3     2     0           1        0    2      0
+#&gt;   Loyal             3       1     0     5           5        2    0      3
+#&gt;           
+#&gt;            Ambrose Romauld Louis Winfrid Amand Hugh Boniface Albert Elias
+#&gt;   Turks          0       0     1       6     0    4        3      1     0
+#&gt;   Outcasts       0       0     0       0     3    0        0      0     2
+#&gt;   Loyal          4       2     2       1     2    2        0      2     0
+#&gt;           
+#&gt;            Simplicius
+#&gt;   Turks             0
+#&gt;   Outcasts          3
+#&gt;   Loyal             0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

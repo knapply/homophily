@@ -16,7 +16,8 @@ Depends: R (>= 3.6)
 Imports:
     igraph,
     Matrix,
-    network
+    network,
+    stats
 Suggests:
     covr,
     ergm,

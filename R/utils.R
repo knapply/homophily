@@ -126,6 +126,32 @@
   g[["gal"]][["n"]]
 }
 
+.as_adj_mat <- function(g) {
+  UseMethod(".as_adj_mat")
+}
+
+#' @importFrom igraph as_adjacency_matrix
+.as_adj_mat.igraph <- function(g) {
+  as_adjacency_matrix(g)
+}
+
+#' @importFrom Matrix sparseMatrix
+.as_adj_mat.network <- function(g) {
+  el <- .as_edgelist(g)
+  dims <- .count_nodes.network(g)
+
+  out <- sparseMatrix(
+    dims = c(dims, dims),
+    i = el[, 1L], 
+    j = el[, 2L], 
+    x = 1
+  )
+  
+  node_names <- .get_node_names.network(g)
+  dimnames(out) <- list(node_names, node_names)
+  
+  out
+}
 
 .as_edgelist <- function(g) {
   UseMethod(".as_edgelist")

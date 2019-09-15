@@ -3,7 +3,7 @@
 \docType{data}
 \name{jemmah_islamiyah}
 \alias{jemmah_islamiyah}
-\title{Koschade's Jemaah Islamiyah (2002 Bali Bombings)}
+\title{Koschade's Jemaah Islamiyah}
 \format{An object of class \code{igraph} of length 10.}
 \source{
 \url{https://www.tandfonline.com/doi/abs/10.1080/10576100600798418}
@@ -13,7 +13,8 @@ jemmah_islamiyah
 }
 \description{
 \code{jemmah_islamiyah} is a reconstruction of the network analyzed
-in Stuart Koschade's A Social Network Analysis of Jemaah Islamiyah.
+in Stuart Koschade's A Social Network Analysis of Jemaah Islamiyah, which
+analyzes the network responsible for the 2002 Bali Bombings.
 }
 \references{
 Koschade, Stuart (2006) A Social Network Analysis of Jemaah

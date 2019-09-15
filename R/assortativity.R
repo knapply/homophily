@@ -1,4 +1,4 @@
-#' Newmans's Assortativity Coefficient
+#' Newmans' Assortativity Coefficient
 #' 
 #' Given a categorical vertex attribute describing mutually exclusive groups, 
 #' the assortativity coefficient represents the tendency for nodes to form ties
@@ -7,6 +7,8 @@
 #' @template param-g
 #' @template param-node_attr_name
 #' @template param-dots
+#' @param val1 Continuous vector.
+#' @param val2 Continuous vector.
 #' 
 #' @details
 #' \deqn{ r = \frac{ \sum_i{e_{ii} - \sum_i{a_ib_i}} } {1 - \sum_i{a_ib_i} } }
@@ -23,16 +25,16 @@
 #' 
 #' @examples
 #' data("faux.desert.high", package = "ergm")
-#' assortativity_attr(faux.desert.high, node_attr_name = "race")
+#' assort_discrete(faux.desert.high, node_attr_name = "race")
 #' 
 #'
 #' data("sampson", package = "ergm")
-#' assortativity_attr(samplike, "group")
+#' assort_discrete(samplike, "group")
 #' 
 #' @importFrom Matrix colSums diag forceSymmetric rowSums
 #' 
 #' @export
-assortativity_attr <- function(g, node_attr_name, ...) {
+assort_discrete <- function(g, node_attr_name, ...) {
   .validate_node_attr(g, node_attr_name)
   
   mix_mat <- as_mixing_matrix(g, node_attr_name, ...)
@@ -42,4 +44,38 @@ assortativity_attr <- function(g, node_attr_name, ...) {
   sigma.a_i.b_i <- sum(colSums(e_ij) * rowSums(e_ij))
   
   (sum(diag(e_ij)) - sigma.a_i.b_i) / (1 - sigma.a_i.b_i)
+}
+
+#' @rdname assort_discrete
+#' 
+#' @importFrom stats cor
+#' 
+#' @export
+assort_scalar <- function(g, val1, val2 = NULL) {
+  if (is.null(val2)) {
+    val2 <- val1
+  }
+  
+  el <- .as_edgelist(g)
+  
+  if (!.is_directed(g)) {
+    val1 <- c(val1, val1)
+    val2 <- c(val2, val2)
+    el <- rbind(el, el[, c(2L, 1L)])
+  }
+  
+  el[, 1L] <- val1[el[, 1L]]
+  el[, 2L] <- val2[el[, 2L]]
+  
+  cor(el[, 1L], el[, 2L])
+}
+
+#' @rdname assort_discrete
+#' 
+#' @importFrom stats cor
+#' 
+#' @export
+assort_degree <- function(g) {
+  adj_mat <- .as_adj_mat(g)
+  assort_scalar(g, rowSums(adj_mat), colSums(adj_mat))
 }
